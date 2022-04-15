@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Randy's Anime</title>
+</head>
+<body>
+    <div id="anime-container"></div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.1/axios.min.js" integrity="sha512-bPh3uwgU5qEMipS/VOmRqynnMXGGSRv+72H/N260MQeXZIK4PG48401Bsby9Nq5P5fz7hy5UGNmC/W1Z51h2GQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    const options = {
+        method: 'GET',
+        url: 'https://animes3.p.rapidapi.com/horror',
+        headers: {
+            'X-RapidAPI-Host': 'animes3.p.rapidapi.com',
+            'X-RapidAPI-Key': 'ea447074a6mshc076d30d90af2bfp135be9jsn098913e1cb1e'
+        }
+    };
+
+    let animeCollections = '';
+    axios.request(options).then(function (response) {
+        for(var i = 0; i < response.data.length; i++) {
+            let currData = response.data[i];
+            let animeShow = `<div class="anime-show">
+                <div class="title">${currData['title']}</div>
+                <div class="img"><img src="${currData["img"]}"/></div>
+            </div>`
+            animeCollections += animeShow;
+        }
+
+        //let's put the data from the API into the HTML
+        animeContainer = document.getElementById("anime-container");
+        animeContainer.insertAdjacentHTML("beforeend", animeCollections)
+
+    }).catch(function (error) {
+        console.error(error);
+    });
+
+
+</script>
+</html>
